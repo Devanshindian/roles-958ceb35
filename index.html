@@ -86,6 +86,7 @@
     transition: opacity .2s;
   }
   .label.popped { opacity: 0; transition: none; }
+  .label.alt { bottom: 112px; }
   .burst {
     position: absolute; width: 1px; height: 10px; background: var(--ink);
     transform-origin: center; pointer-events: none;
@@ -294,6 +295,94 @@ const ROLES = [
       }
     ],
     contact: "LinkedIn Utkarsh, he owns the role."
+  },
+  {
+    company: "Material Depot",
+    url: "https://www.ycombinator.com/companies/material-depot",
+    role: "B2B sales / retail expansion, founders hiring",
+    what: "One place for tiles, laminates, plywood, wall panels and flooring, sold online and in experience centres to architects, designers and homeowners.",
+    meta: ["Bengaluru", "$10M Series A, Accel + Stellaris (Feb 2026)", "~136 people, YC-backed"],
+    founders: [
+      { name: "Sarthak Agrawal", title: "Co-founder & CEO", linkedin: "https://www.linkedin.com/in/sarthak-a/",
+        points: ["IIT Bombay", "Ex-Business Head & AVP at Flipspaces"] },
+      { name: "Manish Reddy", title: "Co-founder & COO", linkedin: "https://in.linkedin.com/in/manishguduru",
+        points: ["Ex-BCG, India and US", "Grew up around a family electrical-contracting business"] }
+    ],
+    contact: "LinkedIn the founders."
+  },
+  {
+    company: "AllHome",
+    url: "https://allhome.in",
+    role: "Founder's Office / Ops, open application",
+    what: "A house of brands for interiors and building products: hardware, bath fittings, windows, surfaces and lighting. Sells to homeowners, architects and contractors.",
+    meta: ["Mumbai", "₹200 Cr Series B, Bessemer (Jun 2026)", "₹400 Cr+ run rate, profitable"],
+    founders: [
+      { name: "Dharmil Sheth", title: "Co-founder", points: ["PharmEasy co-founder", "Runs operations at AllHome"] },
+      { name: "Siddharth Shah", title: "Co-founder", points: ["PharmEasy co-founder & former CEO"] },
+      { name: "Dhaval Shah", title: "Co-founder", points: ["PharmEasy co-founder"] },
+      { name: "Hardik Dedhia", title: "Co-founder", points: ["PharmEasy co-founder"] }
+    ],
+    contact: "contact@allhome.in"
+  },
+  {
+    company: "Fixxly",
+    url: "https://fixxly.in",
+    role: "Founder's Office / Ops, day zero",
+    what: "Plywood, paint, electricals and hardware delivered in 30 minutes from dark stores, for contractors and homeowners. Launched Sep 2026.",
+    meta: ["Bengaluru", "$5.5M seed, Accel + Lightspeed + Fireside (Jul 2026)"],
+    founders: [
+      { name: "Shezan Bhojani", title: "Co-founder & CEO", points: ["Co-founded DesignCafe, merged into HomeLane", "Architect, Columbia MBA"] },
+      { name: "Sachith Varma", title: "Co-founder", points: ["Reportedly ex-Zepto and Flipkart"] }
+    ],
+    contact: "hello@fixxly.in"
+  },
+  {
+    company: "Vaaree",
+    url: "https://www.vaaree.com",
+    role: "Ops / Category, open application",
+    what: "An online marketplace for home decor and furnishings with 150,000+ products and an AI styling tool.",
+    meta: ["Bengaluru", "₹65 Cr Series A, Peak XV Surge + Hero (Aug 2026)", "~100 people"],
+    founders: [
+      { name: "Varun Vohra", title: "Co-founder", points: ["BITS Pilani Dubai, SP Jain", "Co-founded Aknamed; ex-Practo"] },
+      { name: "Garima Luthra", title: "Co-founder", points: ["Ex-Blinkit, CRED, Furlenco, Acko"] }
+    ],
+    contact: "help@vaaree.com"
+  },
+  {
+    company: "Brick&Bolt",
+    url: "https://www.bricknbolt.com",
+    role: "Ops, hiring 500+ roles",
+    what: "Builds homes end to end, from design to handover, with fixed pricing and tracked quality. Same idea as Indecimal, at a bigger scale.",
+    meta: ["Bengaluru", "~$24M raised: Accel, Foundamental, Sequoia", "Growing 100% a year"],
+    founders: [
+      { name: "Jayesh Rajpurohit", title: "Co-founder & CEO", points: ["IIT Roorkee, civil engineering", "22+ years in construction"] },
+      { name: "Arpit Rajpurohit", title: "Co-founder", points: ["VIT Vellore, computer science"] }
+    ],
+    contact: "LinkedIn the founders."
+  },
+  {
+    company: "Modulus Housing",
+    url: "https://www.linkedin.com/company/modulushousing",
+    role: "Ops / Founder's Office, open application",
+    what: "Factory-made, foldable buildings that open up on site: cabins, clinics and housing. 1,500+ built across 21 states.",
+    meta: ["Chennai", "₹70 Cr Series A, Kalaari (Dec 2025)", "Profitable, ~84 people"],
+    founders: [
+      { name: "Shreeram Ravichandran", title: "Co-founder & CEO", points: ["IIT Madras, civil engineering"] },
+      { name: "P Gobinath", title: "Co-founder", points: ["IIT Madras, civil engineering"] }
+    ],
+    contact: "info@modulushousing.com"
+  },
+  {
+    company: "Flo Mobility",
+    url: "https://www.linkedin.com/company/flomobility",
+    role: "Ops, open application",
+    what: "Self-driving electric robots that carry up to 1.5 tonnes around construction sites. 60+ in use at L&T, Godrej Properties and Sobha.",
+    meta: ["Bengaluru", "$2.5M pre-Series A (2026)", "~35 people"],
+    founders: [
+      { name: "Manesh Jain", title: "Founder & CEO", points: ["Third-time founder", "Sold Mockbank to Embibe and Sourceweb to Xeeva"] },
+      { name: "Pratik Patel", title: "Co-founder & COO", points: ["Co-founder"] }
+    ],
+    contact: "contact@flomobility.com"
   }
 ];
 
@@ -351,13 +440,18 @@ function build() {
     stage.appendChild(t);
   };
   addTick(START * W, "0");
+  const gap = (END - START) * W / (n + 1);
+  const size = Math.round(Math.max(16, Math.min(40, gap * 0.72)));
   bubbles = ROLES.map((r, i) => {
     const x = (START + (END - START) * ((i + 1) / (n + 1))) * W;
     addTick(x, String(i + 1));
     const b = document.createElement("div");
     b.className = "bubble"; b.style.left = x + "px";
+    b.style.width = b.style.height = size + "px";
     const l = document.createElement("div");
     l.className = "label"; l.style.left = x + "px"; l.textContent = r.company;
+    if (gap < 46) l.style.display = "none";            // phones: name shows when it's cracked
+    else if (i % 2) l.classList.add("alt");            // stagger names so they don't collide
     stage.append(b, l);
     return { el: b, label: l, x, name: r.company, popped: false };
   });
@@ -441,7 +535,7 @@ function reset() {
 
 function frame(now) {
   const dt = Math.min(50, now - last) / 1000; last = now;
-  const speed = Math.max(72, W / 7);       // px per second, crosses the stage in ~7s (slower floor on phones)
+  const speed = Math.max(100, W / 5);       // px per second, crosses the stage in ~5s
   if (state === "run") {
     x += speed * dt;
     const swordTip = x + RUNNER_W + SWORD_REACH;
